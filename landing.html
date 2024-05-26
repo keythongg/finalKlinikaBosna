@@ -1,0 +1,324 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="stil-landing.css">
+	<link rel="stylesheet" href="navstyle.css">
+	<link rel="stylesheet" href="icofont.css">
+	
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	
+	
+
+	<!-- Bootstrap CSS potreban za zakazivanje termina - ne radi bez toga-->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	
+		
+		
+		
+    <title>Klinika Bosna - Dobrodošli!</title>
+	<link rel="icon" href="img/favicon.png">
+</head>
+
+    <body>
+	
+		<!-- Header Area -->
+<header class="header">
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-5 col-12">
+                    <!-- Contact -->
+                    <ul class="top-link">
+                        <li><a href="#">O nama</a></li>
+                        <li><a href="#">Doktori</a></li>
+                        <li><a href="#">Kontakt</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                    <!-- End Contact -->
+                </div>
+                <div class="col-lg-6 col-md-7 col-12">
+                    <!-- Top Contact -->
+                    <ul class="top-contact">
+                        <li><i class="fa fa-phone"></i>+387 60 301 2288</li>
+                        <li><i class="fa fa-envelope"></i><a href="mailto:support@yourmail.com">štatrebaš@klinikabosna.ba</a></li>
+                    </ul>
+                    <!-- End Top Contact -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Topbar -->
+    
+    <!-- Welcome message -->
+    <div class="welcome-message">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <?php
+                    session_start();
+                    if (isset($_SESSION['ime'])) {
+                        $ime = $_SESSION['ime'];
+                        echo "<p>Dobrodošao, $ime!</p>";
+                    } else {
+                        echo "<p>Dobrodošli!</p>";
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Welcome message -->
+
+
+
+
+
+
+
+
+<!-- End Header Area -->
+			
+			<!-- Header Inner -->
+			<div class="header-inner">
+				<div class="container">
+					<div class="inner">
+						<div class="row">
+							<div class="col-lg-3 col-md-3 col-12">
+								<!-- Start Logo -->
+								<div class="logo">
+									<a href="landing.php"><img src="img\logo-transparent.png" alt="#"></a>
+								</div>
+								<!-- End Logo -->
+								<!-- Mobile Nav -->
+								<div class="mobile-nav"></div>
+								<!-- End Mobile Nav -->
+							</div>
+							<div class="col-lg-7 col-md-9 col-12">
+								<!-- Main Menu -->
+								<div class="main-menu">
+									<nav class="navigation">
+										<ul class="nav menu">
+											<li class="active"><a href="#">Početna<i class="icofont-rounded-down"></i></a>
+											
+										
+    <ul class="dropdown">
+        <li><a href="dashboard.php">Dashboard</a></li>
+      
+    </ul>
+
+											
+											
+											
+											
+										
+											</li>
+											<li><a href="#">Usluge </a></li>
+											<li><a href="#">Doktori</a></li>
+											<li><a href="#">Lokacije <i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<li><a href="404.html">Cazin</a></li>
+													<li><a href="404.html">Bihać</a></li>
+													<li><a href="404.html">Sarajevo</a></li>
+												</ul>
+											</li>
+											<li><a href="#">Kontakt</a>
+	
+											</li>
+											<li><a>Korisnik <i class="icofont-rounded-down"></i></a >
+											<ul class="dropdown">
+													<li><a href="login.html">Prijava</a></li>
+													<li><a href="registracija.php">Registracija</a></li>
+													<li><a href="profil.php">Profil</a></li>
+												</ul>
+										</ul>
+									</nav>
+								</div>
+								<!--/ End Main Menu -->
+							</div>
+							<div class="col-lg-2 col-12">
+								<div class="get-quote">
+									<a href="" class="btn">Zakaži termin</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/ End Header Inner -->
+		</header>
+		<!-- End Header Area -->
+	
+
+
+	
+	
+        <div class="container">
+
+        <section>
+            <div class="container prvi">
+                <div class="row">
+                    <div class="col d-flex justify-content-center align-items-start flex-column pl-2 prvi-tekst">Klinika Bosna <br> Pružatelj vrhunskih usluga! <p>"Najbolja skrb za vaše zdravlje - Broj 1 Klinika u Bosni i Hercegovini"</p></div>
+                    <div class="col p-5 d-flex justify-content-end"><img src="img\klinik.png" alt="" class="prvi-slika"></div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <section>
+          <div class="row">
+            <div class="col d-flex justify-content-center align-items-center flex-column"><h1>Upoznajte naše stručnjake!</h1><h5>Tim vrsnih doktora</h5></div>
+          </div>
+            <div class="row galerija mt-5 g-3">
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column py-3 px-1 doki" ><img src=" img\d1.png" alt="">
+                  <div class="galerija-tekst"><h3>Dr.N.N.</h3><p><i>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</i></p></div>
+                </div>
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column py-3 px-1 doki" ><img src=" img\d2.png" alt="">
+                  <div class="galerija-tekst"><h3>Dr.N.N.</h3><p><i>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</i></p></div>
+                </div>
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column py-3 px-1 doki" ><img src=" img\d3.png" alt="">
+                  <div class="galerija-tekst"><h3>Dr.N.N.</h3><p><i>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</i></p></div>
+                </div>
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column py-3 px-1 doki" ><img src="img\d4.png" alt="">
+                  <div class="galerija-tekst"><h3>Dr.N.N.</h3><p><i>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</i></p></div>
+                </div>
+            </div>
+            
+            <div class="row galerija mt-5 g-3">
+              <div class="col-3 d-flex justify-content-center align-items-center flex-column py-3 px-1 doki" ><img src=" img\d5.png" alt="">
+                <div class="galerija-tekst"><h3>Dr.N.N.</h3><p><i>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</i></p></div>
+              </div>
+              <div class="col-3 d-flex justify-content-center align-items-center flex-column py-3 px-1 doki" ><img src=" img\d6.png" alt="">
+                <div class="galerija-tekst"><h3>Dr.N.N.</h3><p><i>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</i></p></div>
+              </div>
+              <div class="col-3 d-flex justify-content-center align-items-center flex-column py-3 px-1 doki" ><img src=" img\d7.png" alt="">
+                <div class="galerija-tekst"><h3>Dr.N.N.</h3><p><i>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</i></p></div>
+              </div>
+              <div class="col-3 d-flex justify-content-center align-items-center flex-column py-3 px-1 doki" ><img src=" img\d8.png" alt="">
+                <div class="galerija-tekst"><h3>Dr.N.N.</h3><p><i>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</i></p></div>
+              </div>
+          </div>
+        </section>
+
+
+
+<br><br>
+
+
+<!-- ZAKAZIVANJE TERMINA DIO -->
+
+
+<!-- Start Appointment -->
+		<section class="appointment">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="section-title">
+							<h2>Zakažite termin!</h2>
+							<img src="img/section-img.png" alt="#">
+							<p>Pirili smo mi i veće budale od vas. Samo vam gurnemo crivad u usta i nabijemo kompresiju.</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6 col-md-12 col-12">
+						<form class="form" action="#">
+							<div class="row">
+								<div class="col-lg-6 col-md-6 col-12">
+									<div class="form-group">
+										<input name="name" type="text" placeholder="Name">
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6 col-12">
+									<div class="form-group">
+										<input name="email" type="email" placeholder="Email">
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6 col-12">
+									<div class="form-group">
+										<input name="phone" type="text" placeholder="Phone">
+									</div>
+								</div>
+<div class="col-lg-6 col-md-6 col-12">
+    <div class="form-group">
+        <select class="form-control wide velahavlemeni" id="departmentSelect">
+            <option selected disabled hidden>Odjel</option>
+            <option value="2">Cardiac Clinic</option>
+            <option value="3">Neurology</option>
+            <option value="4">Dentistry</option>
+            <option value="5">Gastroenterology</option>
+        </select>
+    </div>
+</div>
+
+
+
+								<div class="col-lg-6 col-md-6 col-12">
+    <div class="form-group">
+        <select class="form-control wide velahavlemeni" id="doctorSelect">
+            <option selected disabled hidden>Doktori</option>
+            <option value="2">Mujo</option>
+            <option value="3">Suljo</option>
+            <option value="4">Fate</option>
+            <option value="5">Guzina</option>
+        </select>
+    </div>
+</div>
+								
+								
+								<div class="col-lg-6 col-md-6 col-12">
+									<div class="form-group">
+										<input type="date" class="form-control" id="date">
+									</div>
+								</div>
+								<div class="col-lg-12 col-md-12 col-12">
+									<div class="form-group">
+										<textarea name="message" placeholder="Write Your Message Here....."></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-5 col-md-4 col-12">
+									<div class="form-group">
+										<div class="get-quote">
+											<button type="submit" class="btn">Book An Appointment</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-7 col-md-8 col-12">
+									<p>( Potvrdit ćemo kad na vrbi rodi grožđe! )</p>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="col-lg-6 col-md-12 ">
+						<div class="appointment-image">
+							<img src="img/contact-img.png" alt="#">
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End Appointment -->
+
+
+        <section class="kontakt">
+          <h3 style="text-align: center;">Kontakt</h3>
+          <div class="row g-3">
+            <div class="col-4"><div class="d-flex flex-column align-items-start mt-5"><i class="bi bi-geo-alt-fill ikona mb-3"></i><b><h4>Lokacije</h4></b><p>Lorem ipsum dolor sit amet, <br> consectetuer adipiscing elit.</p> <h6>Ulica Ovoga Onoga stočeteres, Cazin</h6><h6>Ulica Ovoga Onoga stočeteres, Bihać</h6><h6>Ulica Ovoga Onoga stočeteres, Sarajevo</h6></div></div>
+            <div class="col-4"><div class="d-flex flex-column align-items-center mt-5"><i class="bi bi-envelope-at-fill ikona mb-3"></i><b><h4>Email</h4></b> <p>Lorem ipsum dolor sit amet, <br> consectetuer adipiscing elit.</p> <h6>klinikabosna@info.ba</h3> </div></div>
+             <div class="col-4"><div class="d-flex flex-column align-items-end mt-5"><i class="bi bi-telephone-fill ikona mb-3"></i><b><h4>Telefon</h4></b><p>Lorem ipsum dolor sit amet, <br> consectetuer adipiscing elit.</p> <h6>+387 37 123 456</h6><h6>+387 37 111 000</h6><h6>+387 37 789 987</h6></div></div>
+            </div>
+        </section>
+        
+      </div>
+	
+	  
+    </body>
+</html>

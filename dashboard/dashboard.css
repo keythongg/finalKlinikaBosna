@@ -1,0 +1,25 @@
+body {
+    font-size: 0.875rem;
+}
+
+.sidebar {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.nav-link {
+    color: rgba(0, 0, 0, .5);
+}
+
+.nav-link.active {
+    color: #007bff;
+}
+
+.card {
+    color: #007bff;
+}
+
+.table {
+    margin-top: 20px;
+}
+

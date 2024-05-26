@@ -1,0 +1,273 @@
+<?php
+// Povezivanje sa bazom podataka
+$servername = "localhost";
+$username = "admin";
+$password = "admin";
+$database = "bosna";
+
+// Povezivanje na bazu podataka
+$conn = mysqli_connect($servername, $username, $password, $database);
+
+// Provera konekcije
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Provera da li je korisnik kliknuo na dugme za registraciju
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Dobijanje unetih podataka iz forme
+    $ime = $_POST["ime"];
+    $prezime = $_POST["prezime"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $datum_rodjenja = $_POST["datum_rodjenja"];
+
+    // SQL upit za unošenje podataka u bazu
+    $sql = "INSERT INTO Korisnici (Ime, Prezime, Email, Password, Datum_rodjenja) VALUES ('$ime', '$prezime', '$email', '$password', '$datum_rodjenja')";
+
+    // Izvršavanje SQL upita
+    if (mysqli_query($conn, $sql)) {
+        echo "Uspešno ste se registrovali.";
+    } else {
+        echo "Greška prilikom registracije: " . mysqli_error($conn);
+    }
+}
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Register</title>
+	<link rel="icon" href="img/favicon.png">
+</head>
+<body>
+
+    <!----------------------- Main Container -------------------------->
+
+     <div class="container d-flex justify-content-center align-items-center min-vh-100">
+
+    <!----------------------- Login Container -------------------------->
+
+       <!--<div class="row border rounded-5 p-3 bg-white shadow box-area">-->
+
+    <!--------------------------- Left Box ----------------------------->
+
+       <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #1b1b42;">
+            <a href="landing.html"><div class="featured-image mb-3">
+            <img src="img\logo-bg.png" class="img-fluid" style="width: 250px;">
+           </div></a>
+           
+       </div> 
+
+    <!-------------------- ------ Right Box ---------------------------->
+        
+		
+		
+		
+		
+		
+		
+		
+       <div class="col-md-6 right-box">
+          <div class="row align-items-center">
+                <div class="header-text mb-4">
+                     <h2>Registracija na servis</h2>
+                     
+                </div>
+				
+				
+				<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Ime" name="ime">
+    </div>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Prezime" name="prezime">
+    </div>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Email" name="email">
+    </div>
+    <div class="input-group mb-3">
+        <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password" name="password">
+    </div>
+    <div class="input-group mb-4">
+        <select class="form-select form-select-lg bg-light fs-6 me-2" aria-label="Month">
+        <option selected disabled hidden>Mjesec</option>
+    <option value="1">Januar</option>
+    <option value="2">Februar</option>
+    <option value="3">Mart</option>
+    <option value="4">April</option>
+    <option value="5">Maj</option>
+    <option value="6">Juni</option>
+    <option value="7">Juli</option>
+    <option value="8">August</option>
+    <option value="9">Septembar</option>
+    <option value="10">Oktobar</option>
+    <option value="11">Novembar</option>
+    <option value="12">Decembar</option>
+    </select>
+    <select class="form-select form-select-lg bg-light fs-6 me-2" aria-label="Day">
+        <option selected disabled hidden>Dan</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="13">13</option>
+    <option value="14">14</option>
+    <option value="15">15</option>
+    <option value="16">16</option>
+    <option value="17">17</option>
+    <option value="18">18</option>
+    <option value="19">19</option>
+    <option value="20">20</option>
+    <option value="21">21</option>
+    <option value="22">22</option>
+    <option value="23">23</option>
+    <option value="24">24</option>
+    <option value="25">25</option>
+    <option value="26">26</option>
+    <option value="27">27</option>
+    <option value="28">28</option>
+    <option value="29">29</option>
+    <option value="30">30</option>
+    <option value="31">31</option>
+    </select>
+	
+   <select class="form-select form-select-lg bg-light fs-6 me-2" aria-label="Godina">
+    <option selected disabled hidden>Godina</option>
+	
+     <option value="1">2015</option>
+    <option value="2">2014</option>
+    <option value="3">2013</option>
+    <option value="4">2012</option>
+    <option value="5">2011</option>
+    <option value="6">2010</option>
+    <option value="7">2009</option>
+    <option value="8">2008</option>
+    <option value="9">2007</option>
+    <option value="10">2006</option>
+    <option value="11">2005</option>
+    <option value="12">2004</option>
+    <option value="13">2003</option>
+    <option value="14">2002</option>
+    <option value="15">2001</option>
+    <option value="16">2000</option>
+    <option value="17">1999</option>
+	<option value="18">1998</option>
+<option value="19">1997</option>
+<option value="20">1996</option>
+<option value="21">1995</option>
+<option value="22">1994</option>
+<option value="23">1993</option>
+<option value="24">1992</option>
+<option value="25">1991</option>
+<option value="26">1990</option>
+<option value="27">1989</option>
+<option value="28">1988</option>
+<option value="29">1987</option>
+<option value="30">1986</option>
+<option value="31">1985</option>
+<option value="32">1984</option>
+<option value="33">1983</option>
+<option value="34">1982</option>
+<option value="35">1981</option>
+<option value="36">1980</option>
+<option value="37">1979</option>
+<option value="38">1978</option>
+<option value="39">1977</option>
+<option value="40">1976</option>
+<option value="41">1975</option>
+<option value="42">1974</option>
+<option value="43">1973</option>
+<option value="44">1972</option>
+<option value="45">1971</option>
+<option value="46">1970</option>
+<option value="47">1969</option>
+<option value="48">1968</option>
+<option value="49">1967</option>
+<option value="50">1966</option>
+<option value="51">1965</option>
+<option value="52">1964</option>
+<option value="53">1963</option>
+<option value="54">1962</option>
+<option value="55">1961</option>
+<option value="56">1960</option>
+<option value="57">1959</option>
+<option value="58">1958</option>
+<option value="59">1957</option>
+<option value="60">1956</option>
+<option value="61">1955</option>
+<option value="62">1954</option>
+<option value="63">1953</option>
+<option value="64">1952</option>
+<option value="65">1951</option>
+<option value="66">1950</option>
+<option value="67">1949</option>
+<option value="68">1948</option>
+<option value="69">1947</option>
+<option value="70">1946</option>
+<option value="71">1945</option>
+<option value="72">1944</option>
+<option value="73">1943</option>
+<option value="74">1942</option>
+<option value="75">1941</option>
+<option value="76">1940</option>
+<option value="77">1939</option>
+<option value="78">1938</option>
+<option value="79">1937</option>
+<option value="80">1936</option>
+<option value="81">1935</option>
+<option value="82">1934</option>
+<option value="83">1933</option>
+<option value="84">1932</option>
+<option value="85">1931</option>
+<option value="86">1930</option>
+<option value="87">1929</option>
+<option value="88">1928</option>
+<option value="89">1927</option>
+<option value="90">1926</option>
+<option value="91">1925</option>
+<option value="92">1924</option>
+<option value="93">1923</option>
+<option value="94">1922</option>
+<option value="95">1921</option>
+<option value="96">1920</option>
+<option value="97">1919</option>
+<option value="98">1918</option>
+<option value="99">1917</option>
+<option value="100">1916</option>
+
+
+
+	 
+</select>
+    </div>
+    <div class="input-group mb-3 d-flex justify-content-between">
+        <div class="input-group mb-1">
+            <button class="btn btn-lg btn-primary w-100 fs-6" type="submit">Register</button>
+        </div>
+        <div class="row">
+            <small>Already a member? <a href="login.html">Sign In</a></small>
+        </div>
+    </div>
+</form>
+
+				
+
+	
+
+</body>
+</html>
