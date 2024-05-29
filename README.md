@@ -36,7 +36,7 @@ Ova datoteka omogućava registraciju novih korisnika.
 
 [![image.png](https://i.postimg.cc/mZY377BC/image.png)](https://postimg.cc/QVMW39Bd)
 
-    Kod prikazan ispod pokazuje kako se koriste prepared statements za sigurnu interakciju s bazom podataka, što smanjuje rizik od SQL injekcija:
+ - Kod prikazan ispod pokazuje kako se koriste prepared statements za sigurnu interakciju s bazom podataka, što smanjuje rizik od SQL injekcija:
     - **prepare** metoda se koristi za pripremu SQL upita. Ovo pomaže u sprječavanju SQL injekcija jer upit nije izravno interpoliran sa korisničkim unosima.
     - **bind_param** metoda veže varijable na odgovarajuće pozicije u upitu. Tipovi parametara se specificiraju koristeći formatne kodove (npr. s za string).
     - **execute** metoda izvršava pripremljeni upit sa vezanim parametrima.
