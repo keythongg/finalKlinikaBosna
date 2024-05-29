@@ -206,79 +206,100 @@ Ova datoteka omogućava korisnicima pregled i ažuriranje njihovog profila.
     - **Validacija lozinke:** Provjerava se dužina lozinke, prisustvo brojeva i specijalnih znakova.
 
     ```php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $telefon = $_POST['telefon'];
-        $twofa_enabled = isset($_POST['twofa_enabled']) ? 1 : 0;
+    
+// Provjera da li je korisnik kliknuo na dugme za ažuriranje profila
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $telefon = $_POST['telefon'];
+    $twofa_enabled = isset($_POST['twofa_enabled']) ? 1 : 0;
 
-        if (!empty($_POST['new_password']) || !empty($_POST['confirm_password'])) {
-            if (empty($_POST['new_password']) || empty($_POST['confirm_password'])) {
-                $_SESSION['error_message'] = 'Oba polja za novu šifru moraju biti popunjena.';
-            } else {
-                $new_password = $_POST['new_password'];
-                $confirm_password = $_POST['confirm_password'];
+    // Provjera da li je korisnik uneo novu šifru
+    if (!empty($_POST['new_password']) || !empty($_POST['confirm_password'])) {
+        if (empty($_POST['new_password']) || empty($_POST['confirm_password'])) {
+            $_SESSION['error_message'] = 'Oba polja za novu šifru moraju biti popunjena.';
+        } else {
+            $new_password = $_POST['new_password'];
+            $confirm_password = $_POST['confirm_password'];
 
-                $password_errors = [];
-                if (strlen($new_password) < 8) {
-                    $password_errors[] = 'Šifra mora imati najmanje 8 znakova.';
-                }
-                if (!preg_match('/[0-9]/', $new_password)) {
-                    $password_errors[] = 'Šifra mora sadržavati barem jedan broj.';
-                }
-                if (!preg_match('/\\W/', $new_password)) {
-                    $password_errors[] = 'Šifra mora sadržavati barem jedan specijalni znak.';
-                }
+            // Validacija nove šifre samo ako je korisnik uneo novu šifru
+            $password_errors = [];
+            if (strlen($new_password) < 8) {
+                $password_errors[] = 'Šifra mora imati najmanje 8 znakova.';
+            }
+            if (!preg_match('/[0-9]/', $new_password)) {
+                $password_errors[] = 'Šifra mora sadržavati barem jedan broj.';
+            }
+            if (!preg_match('/\W/', $new_password)) {
+                $password_errors[] = 'Šifra mora sadržavati barem jedan specijalni znak.';
+            }
 
-                $sql_last_passwords = "SELECT Password FROM passwordhistory WHERE ID_korisnika='$user_id' ORDER BY ID DESC LIMIT 4";
-                $result_last_passwords = mysqli_query($conn, $sql_last_passwords);
-                if (!$result_last_passwords) {
-                    die('Query failed: ' . mysqli_error($conn));
-                }
-                $last_passwords = array();
-                while ($row_password = mysqli_fetch_assoc($result_last_passwords)) {
-                    $last_passwords[] = $row_password['Password'];
-                }
+            // Provera protiv istorije šifara
+            $stmt = $conn->prepare("SELECT Password FROM passwordhistory WHERE ID_korisnika = ? ORDER BY ID DESC LIMIT 4");
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $result_last_passwords = $stmt->get_result();
+            if (!$result_last_passwords) {
+                die('Query failed: ' . mysqli_error($conn));
+            }
+            $last_passwords = array();
+            while ($row_password = $result_last_passwords->fetch_assoc()) {
+                $last_passwords[] = $row_password['Password'];
+            }
+            $stmt->close();
 
-                foreach ($last_passwords as $last_password) {
-                    if (password_verify($new_password, $last_password)) {
-                        $password_errors[] = 'Nova šifra ne može biti jedna od posljednjih 4 korištene šifre.';
-                        break;
-                    }
-                }
-
-                if ($new_password !== $confirm_password) {
-                    $password_errors[] = 'Nova šifra se ne podudara s potvrdom nove šifre.';
-                }
-
-                if (count($password_errors) > 0) {
-                    $_SESSION['error_message'] = implode(" ", $password_errors);
-                } else {
-                    $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-                    $sql_update_password = "UPDATE Korisnici SET Password='$hashed_password' WHERE ID_korisnika='$user_id'";
-                    if (mysqli_query($conn, $sql_update_password)) {
-                        $_SESSION['success_message'] = 'Šifra uspešno ažurirana!';
-                        $sql_insert_password_history = "INSERT INTO passwordhistory (ID_korisnika, Password, CreatedAt) VALUES ('$user_id', '$hashed_password', NOW())";
-                        if (!mysqli_query($conn, $sql_insert_password_history)) {
-                            $_SESSION['error_message'] = 'Greška prilikom dodavanja šifre u istoriju: ' . mysqli_error($conn);
-                        }
-                    } else {
-                        $_SESSION['error_message'] = 'Greška prilikom ažuriranja šifre: ' . mysqli_error($conn);
-                    }
+            // Proveri da li je nova šifra jedna od poslednjih 4 korištene šifre (hashovane)
+            $used_recently = false;
+            foreach ($last_passwords as $last_password) {
+                if (password_verify($new_password, $last_password)) {
+                    $used_recently = true;
+                    break;
                 }
             }
-        }
 
-        $sql_update_profile = "UPDATE Korisnici SET Ime='$username', Email='$email', Telefon='$telefon', twofa_enabled='$twofa_enabled' WHERE ID_korisnika='$user_id'";
-        if (mysqli_query($conn, $sql_update_profile) && empty($_SESSION['error_message'])) {
-            $_SESSION['success_message'] = 'Profil uspešno ažuriran!';
+            if ($used_recently) {
+                $password_errors[] = 'Nova šifra ne može biti jedna od posljednjih 4 korištene šifre.';
+            }
+
+            if ($new_password !== $confirm_password) {
+                $password_errors[] = 'Nova šifra se ne podudara s potvrdom nove šifre.';
+            }
+
+            if (count($password_errors) > 0) {
+                $_SESSION['error_message'] = implode("<br>", $password_errors);
+            } else {
+                // Ako nema grešaka, ažuriraj šifru
+                $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+                $stmt = $conn->prepare("UPDATE Korisnici SET Password = ? WHERE ID_korisnika = ?");
+                $stmt->bind_param("si", $hashed_password, $user_id);
+                if ($stmt->execute()) {
+                    $_SESSION['success_message'] = 'Šifra uspješno ažurirana!';
+                    
+                    // Dodaj novu šifru u istoriju šifara
+                    $stmt = $conn->prepare("INSERT INTO passwordhistory (ID_korisnika, Password, CreatedAt) VALUES (?, ?, NOW())");
+                    $stmt->bind_param("is", $user_id, $hashed_password);
+                    if (!$stmt->execute()) {
+                        $_SESSION['error_message'] = 'Greška prilikom dodavanja šifre u istoriju: ' . $stmt->error;
+                    }
+                } else {
+                    $_SESSION['error_message'] = 'Greška prilikom ažuriranja šifre: ' . $stmt->error;
+                }
+                $stmt->close();
+            }
+        }
+    } else {
+        // Ažuriranje ostalih informacija profila
+        $stmt = $conn->prepare("UPDATE Korisnici SET Ime = ?, Email = ?, Telefon = ?, twofa_enabled = ? WHERE ID_korisnika = ?");
+        $stmt->bind_param("sssii", $username, $email, $telefon, $twofa_enabled, $user_id);
+        if ($stmt->execute()) {
+            $_SESSION['success_message'] = 'Profil uspješno ažuriran!';
+            
+            // Update session variables
             $_SESSION['ime'] = $username;
         } else {
-            $_SESSION['error_message'] = 'Greška prilikom ažuriranja profila: ' . mysqli_error($conn);
+            $_SESSION['error_message'] = 'Greška prilikom ažuriranja profila: ' . $stmt->error;
         }
-
-        $result_user_data = mysqli_query($conn, $sql_get_user_data);
-        $row = mysqli_fetch_assoc($result_user_data);
+        $stmt->close();
     }
     ```
 
