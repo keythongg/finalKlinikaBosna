@@ -235,7 +235,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $password_errors[] = 'Šifra mora sadržavati barem jedan specijalni znak.';
             }
 
-            // Provera protiv istorije šifara
+            // Provjera protiv istorije šifara
             $stmt = $conn->prepare("SELECT Password FROM passwordhistory WHERE ID_korisnika = ? ORDER BY ID DESC LIMIT 4");
             $stmt->bind_param("i", $user_id);
             $stmt->execute();
@@ -249,7 +249,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             $stmt->close();
 
-            // Proveri da li je nova šifra jedna od poslednjih 4 korištene šifre (hashovane)
+            // Provjeri da li je nova šifra jedna od poslednjih 4 korištene šifre (hashovane)
             $used_recently = false;
             foreach ($last_passwords as $last_password) {
                 if (password_verify($new_password, $last_password)) {
@@ -276,7 +276,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($stmt->execute()) {
                     $_SESSION['success_message'] = 'Šifra uspješno ažurirana!';
                     
-                    // Dodaj novu šifru u istoriju šifara
+                    // Dodaj novu šifru u historiju
                     $stmt = $conn->prepare("INSERT INTO passwordhistory (ID_korisnika, Password, CreatedAt) VALUES (?, ?, NOW())");
                     $stmt->bind_param("is", $user_id, $hashed_password);
                     if (!$stmt->execute()) {
