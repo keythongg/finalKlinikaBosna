@@ -43,7 +43,7 @@ $ime = $prezime = $email = $lozinka = $datum_rodjenja = "";
 
 // Provjera da li je korisnik kliknuo na dugme za registraciju
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Dobijanje unetih podataka iz forme
+    // Dobijanje unesenih podataka iz forme
     $_SESSION['ime'] = $_POST["ime"];
     $_SESSION['prezime'] = $_POST["prezime"];
     $_SESSION['email'] = $_POST["email"];
