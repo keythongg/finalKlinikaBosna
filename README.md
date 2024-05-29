@@ -32,7 +32,7 @@ Ova datoteka omogućava registraciju novih korisnika.
     ```
 
 3. **Unos i validacija podataka:**
-    - Prikupljanje i validacija korisničkih podataka, uključujući provjeru formata email adrese i snagu lozinke. Metoda **POST** koristi se za slanje podataka na server radi obrade. Kada se koristi u formi, podaci se šalju u tijelu HTTP zahtjeva, što znači da nisu vidljivi u URL-u, čime se povećava sigurnost osjetljivih informacija poput lozinki. POST metoda također omogućava slanje većih količina podataka u usporedbi s GET metodom, što je korisno za složenije forme i datoteke.
+ - Prikupljanje i validacija korisničkih podataka, uključujući provjeru formata email adrese i snagu lozinke. Metoda **POST** koristi se za slanje podataka na server radi obrade. Kada se koristi u formi, podaci se šalju u tijelu HTTP zahtjeva, što znači da nisu vidljivi u URL-u, čime se povećava sigurnost osjetljivih informacija poput lozinki. POST metoda također omogućava slanje većih količina podataka u usporedbi s GET metodom, što je korisno za složenije forme i datoteke.
 
 [![image.png](https://i.postimg.cc/mZY377BC/image.png)](https://postimg.cc/QVMW39Bd)
 
