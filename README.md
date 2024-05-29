@@ -38,43 +38,58 @@ Ova datoteka omogućava registraciju novih korisnika.
 
 
 ```php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $_SESSION['ime'] = $_POST["ime"];
-        $_SESSION['prezime'] = $_POST["prezime"];
-        $_SESSION['email'] = $_POST["email"];
-        $_SESSION['datum_rodjenja'] = $_POST["datum_rodjenja"];
+   // Postavljanje varijabli za čuvanje unesenih podataka
+$ime = $prezime = $email = $lozinka = $datum_rodjenja = "";
 
-        $ime = $_SESSION['ime'];
-        $prezime = $_SESSION['prezime'];
-        $email = $_SESSION['email'];
-        $lozinka = $_POST["password"];
-        $datum_rodjenja = $_SESSION['datum_rodjenja'];
+// Provjera da li je korisnik kliknuo na dugme za registraciju
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Dobijanje unetih podataka iz forme
+    $_SESSION['ime'] = $_POST["ime"];
+    $_SESSION['prezime'] = $_POST["prezime"];
+    $_SESSION['email'] = $_POST["email"];
+    $_SESSION['datum_rodjenja'] = $_POST["datum_rodjenja"];
+    
+    $ime = $_SESSION['ime'];
+    $prezime = $_SESSION['prezime'];
+    $email = $_SESSION['email'];
+    $lozinka = $_POST["password"];
+    $datum_rodjenja = $_SESSION['datum_rodjenja'];
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            echo '<div class="alert alert-danger" role="alert">Neispravan format emaila.</div>';
-        } else if (strlen($lozinka) < 8 || !preg_match('/[0-9]/', $lozinka) || !preg_match('/\\W/', $lozinka)) {
-            echo '<div class="alert alert-danger" role="alert">Lozinka mora imati minimum 8 znakova, uključujući brojeve i specijalne znakove.</div>';
-            $lozinka = "";
+    // Provjera ispravnosti formata emaila
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo '<div class="alert alert-danger" role="alert">Neispravan format emaila.</div>';
+    } else if (strlen($lozinka) < 8 || !preg_match('/[0-9]/', $lozinka) || !preg_match('/\W/', $lozinka)) {
+        echo '<div class="alert alert-danger" role="alert">Lozinka mora imati minimum 8 znakova, uključujući brojeve i specijalne znakove.</div>';
+        $lozinka = "";
+    } else {
+        // Priprema SQL upita za provjeru emaila
+        $stmt = $conn->prepare("SELECT * FROM Korisnici WHERE Email = ? LIMIT 1");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            echo '<div class="alert alert-danger" role="alert">Korisnik s tim emailom već postoji.</div>';
         } else {
-            $email_check_query = "SELECT * FROM Korisnici WHERE Email='$email' LIMIT 1";
-            $result = mysqli_query($conn, $email_check_query);
-            if (mysqli_fetch_assoc($result)) {
-                echo '<div class="alert alert-danger" role="alert">Korisnik s tim emailom već postoji.</div>';
+            // Hashovanje lozinke
+            $hashed_password = password_hash($lozinka, PASSWORD_DEFAULT);
+            // Priprema SQL upita za unos korisnika
+            $stmt = $conn->prepare("INSERT INTO Korisnici (Ime, Prezime, Email, Password, Datum_rodjenja, Tip_korisnika) VALUES (?, ?, ?, ?, ?, 'obični korisnik')");
+            $stmt->bind_param("sssss", $ime, $prezime, $email, $hashed_password, $datum_rodjenja);
+            
+            if ($stmt->execute()) {
+                echo '<div class="alert alert-success" role="alert">Uspješno ste se registrovali.</div>';
+                session_unset(); // Prazni sve sesija varijable
+                sleep(3);
+                header("Location: login.php");
+                exit();
             } else {
-                $hashed_password = password_hash($lozinka, PASSWORD_DEFAULT);
-                $sql = "INSERT INTO Korisnici (Ime, Prezime, Email, Password, Datum_rodjenja, Tip_korisnika) VALUES ('$ime', '$prezime', '$email', '$hashed_password', '$datum_rodjenja', 'obični korisnik')";
-                if (mysqli_query($conn, $sql)) {
-                    echo '<div class="alert alert-success" role="alert">Uspješno ste se registrovali.</div>';
-                    session_unset();
-                    sleep(3);
-                    header("Location: login.php");
-                    exit();
-                } else {
-                    echo '<div class="alert alert-danger" role="alert">Greška prilikom registracije: ' . mysqli_error($conn) . '</div>';
-                }
+                echo '<div class="alert alert-danger" role="alert">Greška prilikom registracije: ' . $stmt->error . '</div>';
             }
         }
+        $stmt->close();
     }
+}
 ```
 
 ## 2. **login.php**
