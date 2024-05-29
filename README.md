@@ -205,7 +205,8 @@ Ova datoteka omogućava korisnicima pregled i ažuriranje njihovog profila.
     - Kada korisnik podnese formu za ažuriranje, podaci se validiraju i ažuriraju u bazi.
     - **Validacija lozinke:** Provjerava se dužina lozinke, prisustvo brojeva i specijalnih znakova.
 
-    ```php
+```php
+    
     
 // Provjera da li je korisnik kliknuo na dugme za ažuriranje profila
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -301,7 +302,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         $stmt->close();
     }
-    ```
+    
+```
 
 ## 4. **unos_2fa.php**
 
