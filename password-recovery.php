@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Host = 'smtp.gmail.com'; // Promijenite u svoj SMTP server
             $mail->SMTPAuth = true;
             $mail->Username = 'klinikabosna@gmail.com'; // Promijenite u svoj email
-            $mail->Password = 'fgawglsgznwnbbdo'; // Promijenite u svoju lozinku
+            $mail->Password = 'sifra'; // Promijenite u svoju lozinku
             $mail->SMTPSecure = 'ssl';
             $mail->Port = 465;
 
