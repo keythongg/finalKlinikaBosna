@@ -75,8 +75,8 @@ try {
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com'; // Promijenite u svoj SMTP server
     $mail->SMTPAuth = true;
-    $mail->Username = 'klinikabosna@gmail.com'; // Promijenite u svoj email
-    $mail->Password = 'fgawglsgznwnbbdo'; // Promijenite u svoju lozinku
+    $mail->Username = 'klinikabosna@gmail.com'; 
+    $mail->Password = 'sifra'; 
     $mail->SMTPSecure = 'ssl';
     $mail->Port = 465;
 
